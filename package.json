@@ -1,6 +1,6 @@
 {
   "name": "@razee/kubernetes-util",
-  "version": "0.0.1",
+  "version": "0.0.0-dev",
   "description": "A set of Kubernetes API utilities to facilitate resource discovery and watches",
   "main": "index.js",
   "keywords":["kubernetes","razee","razeedash"],
@@ -26,6 +26,9 @@
       "name": "Alex Lewitt"
     }
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "@kubernetes/client-node": "^0.8.2",
