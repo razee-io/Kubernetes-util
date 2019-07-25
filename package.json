@@ -52,7 +52,7 @@
   "devDependencies": {
     "audit-ci": "^2.2.0",
     "chai": "^4.2.0",
-    "eslint": "^5.10.0",
+    "eslint": "^6.1.0",
     "markdownlint-cli": "^0.16.0",
     "mocha": "^6.1.4",
     "nock": "^10.0.6",
