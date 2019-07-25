@@ -15,7 +15,6 @@
 */
 const assert = require('chai').assert;
 const nock = require('nock');
-const StreamTest = require('streamtest');
 const watchman = require('../lib/Watchman');
 const log = require('../lib/bunyan-api').createLogger('Watchman-test');
 
