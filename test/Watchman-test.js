@@ -15,7 +15,6 @@
 */
 const assert = require('chai').assert;
 const nock = require('nock');
-const StreamTest = require('streamtest');
 const watchman = require('../lib/Watchman');
 const log = require('../lib/bunyan-api').createLogger('Watchman-test');
 
@@ -192,8 +191,8 @@ describe('watchman', () => {
       }
     });
 
-    it('errorstream', (done) => {
-      let wm = {};
+    it('errorResponse', (done) => {
+      let wm;
       let dummyLogger = {
         debug: (msg) => {
           log.debug('dummyLogger', msg);
@@ -204,20 +203,57 @@ describe('watchman', () => {
         error: (msg) => {
           assert.equal(msg, 'GET /api/v1/namespaces/default/services/kubernetes returned 201');
           wm.end();
+        }
+      };
+      let myOptions = dummyOptions;
+      myOptions.logger = dummyLogger;
+      myOptions.requestOptions.baseUrl = 'https://localhost:666';
+      myOptions.rewatchOnTimeout=false;
+      let xmockObjectHandler = (data) => {
+        log.info('xmockObjectHandler', data);
+      };
+      nock('https://localhost:666')
+        .get('/api/v1/namespaces/default/services/kubernetes')
+        .reply(201);
+      let errorsHappen = false;
+      try {
+        wm = new watchman(myOptions, xmockObjectHandler);
+        wm.watch();
+      } catch (err) {
+        errorsHappen = true;
+        assert.equal(err, '');
+      } finally {
+        assert.isFalse(wm.watching);
+        assert.isFalse(errorsHappen);
+        done();
+      }
+    });
+
+    it('errorstream', (done) => {
+      let wm;
+      let dummyLogger = {
+        debug: (msg) => {
+          log.debug('dummyLogger', msg);
+        },
+        info: (msg) => {
+          log.info('dummyLogger', msg);
+        },
+        error: (msg) => {
+          assert.equal(msg, 'GET /api/v1/namespaces/default/services/kubernetes errored');
+          wm.end();
           done();
         }
       };
       let myOptions = dummyOptions;
       myOptions.logger = dummyLogger;
       myOptions.requestOptions.baseUrl = 'https://localhost:666';
+      myOptions.rewatchOnTimeout=false;
       let xmockObjectHandler = (data) => {
         log.info('xmockObjectHandler', data);
       };
       nock('https://localhost:666')
         .get('/api/v1/namespaces/default/services/kubernetes')
-        .reply(201, (uri, requestBody) => { // eslint-disable-line no-unused-vars
-          return StreamTest['v1'].fromErroredObjects('GET /api/v1/namespaces/default/services/kubernetes returned 201', [data1], 500);
-        });
+        .replyWithError('test errorstream error');
       let errorsHappen = false;
       try {
         wm = new watchman(myOptions, xmockObjectHandler);
@@ -229,6 +265,6 @@ describe('watchman', () => {
         assert.isFalse(wm.watching);
         assert.isFalse(errorsHappen);
       }
-    }).timeout(6000);
+    });
   });
 });
