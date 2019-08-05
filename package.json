@@ -51,7 +51,7 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
-    "audit-ci": "^2.2.0",
+    "audit-ci": "^2.3.0",
     "chai": "^4.2.0",
     "eslint": "^6.1.0",
     "markdownlint-cli": "^0.16.0",
