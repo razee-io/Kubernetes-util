@@ -40,7 +40,7 @@
     "array-flatten": "^2.1.2",
     "bunyan": "^1.8.12",
     "clone": "^2.1.2",
-    "deepmerge": "^4.1.0",
+    "deepmerge": "^4.2.0",
     "delay": "^4.1.0",
     "fs-extra": "^8.0.1",
     "npm-check-updates": "^3.1.3",
