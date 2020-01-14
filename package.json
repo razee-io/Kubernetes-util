@@ -22,7 +22,8 @@
     "type": "git",
     "url": "git@github.com:razee-io/kubernetes-util.git"
   },
-  "contributors": [{
+  "contributors": [
+    {
       "name": "Adam King"
     },
     {
