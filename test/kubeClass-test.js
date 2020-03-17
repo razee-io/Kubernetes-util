@@ -161,7 +161,7 @@ describe('kubeClass', function () {
       try {
         await kc.getApis();
       } catch (e) {
-        assert.deepEqual(e, { statusCode: 404, body: { msg: 'not found' } });
+        assert.deepEqual(e, { statusCode: 404, body: { msg: 'not found' }, message: 'Error getting /apis/batch/v2alpha1'});
       }
 
 
