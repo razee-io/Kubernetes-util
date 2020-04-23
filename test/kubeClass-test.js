@@ -17,7 +17,7 @@ const assert = require('chai').assert;
 const nock = require('nock');
 const deepEqual = require('deep-equal');
 const { KubeClass } = require('../index');
-const objectPath = require('object-path');
+// const objectPath = require('object-path');
 
 describe('kubeClass', function () {
 
@@ -134,12 +134,9 @@ describe('kubeClass', function () {
         })
         .get('/apis/batch/v1')
         .reply(200, { kind: 'NotAPIResourceList' });
-      try {
-        await kc.getApis();
-        assert.fail('should not successfully return from getApis()');
-      } catch (e) {
-        assert.equal(objectPath.get(e, 'body.kind'), 'NotAPIResourceList', 'Error body shoud contain bad kind "NotAPIResourceList"');
-      }
+
+      let res = await kc.getApis();
+      assert.equal(res.length, 0, 'Error should return successfully, but without the failed resource');
     });
 
     it('#404', async () => {
@@ -161,7 +158,7 @@ describe('kubeClass', function () {
       try {
         await kc.getApis();
       } catch (e) {
-        assert.deepEqual(e, { statusCode: 404, body: { msg: 'not found' }, message: 'Error getting /apis/batch/v2alpha1'});
+        assert.deepEqual(e, { statusCode: 404, body: { msg: 'not found' }, message: 'Error getting /apis/batch/v2alpha1' });
       }
 
 
