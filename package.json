@@ -49,7 +49,6 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
-    "audit-ci": "^2.2.0",
     "chai": "^4.2.0",
     "deep-equal": "^2.0.1",
     "eslint": "^6.1.0",
