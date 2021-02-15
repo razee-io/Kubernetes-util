@@ -3,6 +3,9 @@ language: node_js
 node_js:
   - "11"
 
+before_install:
+  - echo "$DOCKERHUB_TOKEN" | docker login -u "icdevops" --password-stdin
+  
 script:
   - if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then npm audit; else npm audit || true; fi
   - npm run lint
