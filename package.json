@@ -35,7 +35,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@kubernetes/client-node": "^0.14.3",
+    "@kubernetes/client-node": "^0.15.0",
     "bunyan": "^1.8.15",
     "clone": "^2.1.2",
     "deepmerge": "^4.2.2",
