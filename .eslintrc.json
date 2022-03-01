@@ -1,6 +1,6 @@
 {
     "parserOptions": {
-        "ecmaVersion": 8,
+        "ecmaVersion": 2022,
         "sourceType": "module"
     },
     "env": {
@@ -11,11 +11,11 @@
     "extends": "eslint:recommended",
     "rules": {
         "indent": [
-          "error",
-          2,
-          {
-            "SwitchCase": 1
-          }
+            "error",
+            2,
+            {
+                "SwitchCase": 1
+            }
         ],
         "linebreak-style": [
             "error",
