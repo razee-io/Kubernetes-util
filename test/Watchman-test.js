@@ -18,10 +18,10 @@ const nock = require('nock');
 const watchman = require('../lib/Watchman');
 const log = require('../lib/bunyan-api').createLogger('Watchman-test');
 
-const dummyOptions = { rewatchOnTimeout: false, requestOptions: { baseUrl: 'https://localhost:32263' }, watchUri: '/api/v1/watch/namespaces/default/services/kubernetes' };
+const dummyOptions = { rewatchOnTimeout: false, requestOptions: { baseUrl: 'https://localhost:32263', uri: '/api/v1/watch/namespaces/default/services/kubernetes' } };
 const data1 = { 'type': 'ADDED', 'object': { 'kind': 'Service', 'apiVersion': 'v1', 'metadata': { 'name': 'kubernetes', 'namespace': 'default', 'selfLink': '/api/v1/namespaces/default/services/kubernetes', 'uid': '7c75c135-fca7-11e8-9f10-3a7d3a0f8cf2', 'resourceVersion': '14840391', 'creationTimestamp': '2018-12-10T18:14:51Z', 'labels': { 'component': 'apiserver', 'provider': 'kubernetes', 'razee/watch-resource': 'lite' } }, 'spec': { 'ports': [{ 'name': 'https', 'protocol': 'TCP', 'port': 443, 'targetPort': 2040 }], 'clusterIP': '172.21.0.1', 'type': 'ClusterIP', 'sessionAffinity': 'None' }, 'status': { 'loadBalancer': {} } } };
 
-let mockObjectHandler = (data) => {}; // eslint-disable-line no-unused-vars
+let mockObjectHandler = (data) => { }; // eslint-disable-line no-unused-vars
 
 describe('watchman', () => {
 
