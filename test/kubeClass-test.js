@@ -16,7 +16,8 @@
 const assert = require('chai').assert;
 const nock = require('nock');
 const deepEqual = require('deep-equal');
-const { KubeClass } = require('../index');
+const { KubeClass, KubeApiConfig } = require('../index');
+KubeApiConfig({ localhost: true });
 // const objectPath = require('object-path');
 
 describe('kubeClass', function () {
@@ -25,7 +26,7 @@ describe('kubeClass', function () {
     var kc;
 
     beforeEach(() => {
-      kc = new KubeClass({ baseUrl: 'http://localhost' });
+      kc = new KubeClass();
     });
 
     afterEach(() => {
@@ -34,7 +35,7 @@ describe('kubeClass', function () {
     });
 
     it('#success', async () => {
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get('/api/v1')
         .replyWithFile(200, __dirname + '/replies/coreApis.json', { 'Content-Type': 'application/json' });
       let ca = await kc.getCoreApis();
@@ -44,7 +45,7 @@ describe('kubeClass', function () {
     });
 
     it('#error', async () => {
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get('/api/v1')
         .replyWithError('bad things happened man');
       try {
@@ -62,7 +63,7 @@ describe('kubeClass', function () {
     var kc;
 
     beforeEach(() => {
-      kc = new KubeClass({ baseUrl: 'http://localhost' });
+      kc = new KubeClass();
     });
 
     afterEach(() => {
@@ -71,7 +72,7 @@ describe('kubeClass', function () {
     });
 
     it('#success latest no duplicates', async () => {
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get('/apis')
         .replyWithFile(200, __dirname + '/replies/apiGroups.json', { 'Content-Type': 'application/json' })
         .get('/apis/apps/v1')
@@ -93,7 +94,7 @@ describe('kubeClass', function () {
     });
 
     it('#success all with duplicates', async () => {
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get('/apis')
         .replyWithFile(200, __dirname + '/replies/apiGroups.json', { 'Content-Type': 'application/json' })
         .get('/apis/apps/v1')
@@ -115,7 +116,7 @@ describe('kubeClass', function () {
     });
 
     it('#success no ApiList', async () => {
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get('/apis')
         .reply(200, {
           'kind': 'APIGroupList',
@@ -140,7 +141,7 @@ describe('kubeClass', function () {
     });
 
     it('#404', async () => {
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get('/apis')
         .replyWithFile(200, __dirname + '/replies/apiGroups.json', { 'Content-Type': 'application/json' })
         .get('/apis/apps/v1')
@@ -166,7 +167,7 @@ describe('kubeClass', function () {
     });
 
     it('#error', async () => {
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get('/apis')
         .replyWithError('bad things happened man');
       try {
@@ -183,7 +184,7 @@ describe('kubeClass', function () {
     var kc;
 
     beforeEach(() => {
-      kc = new KubeClass({ baseUrl: 'http://localhost' });
+      kc = new KubeClass();
     });
 
     afterEach(() => {
@@ -191,8 +192,8 @@ describe('kubeClass', function () {
       nock.cleanAll();
     });
 
-    it('#success', async () => {
-      nock('http://localhost/')
+    it.only('#success', async () => {
+      nock('http://localhost:8001')
         .get('/api/v1')
         .replyWithFile(200, __dirname + '/replies/coreApis.json', { 'Content-Type': 'application/json' })
         .get('/apis')
@@ -211,11 +212,12 @@ describe('kubeClass', function () {
         .replyWithFile(200, __dirname + '/replies/batch-v2alpha1.json', { 'Content-Type': 'application/json' });
 
       let mr = await kc.getKubeResourcesMeta('watch');
+      console.log(mr);
       assert.equal(mr.length, 8, 'Should get 8 MetaResources that support watch');
     });
 
     it('#success w/out verb', async () => {
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get('/api/v1')
         .replyWithFile(200, __dirname + '/replies/coreApis.json', { 'Content-Type': 'application/json' })
         .get('/apis')
@@ -239,10 +241,10 @@ describe('kubeClass', function () {
     });
 
     it('#error', async () => {
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get('/api/v1')
         .replyWithError('bad things happened man');
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get('/apis')
         .replyWithError('other bad things happened man');
       try {
@@ -260,7 +262,7 @@ describe('kubeClass', function () {
     var kc;
 
     beforeEach(() => {
-      kc = new KubeClass({ baseUrl: 'http://localhost' });
+      kc = new KubeClass();
     });
 
     afterEach(() => {
@@ -284,7 +286,7 @@ describe('kubeClass', function () {
         'resource-metadata': krm,
         object: exampleResource
       };
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get(krm.uri())
         .query((actualQueryObject) => {
           return deepEqual(actualQueryObject, queryObject);
@@ -309,7 +311,7 @@ describe('kubeClass', function () {
         'resource-metadata': krm,
         error: resourceNotFound
       };
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get(krm.uri())
         .reply(404, resourceNotFound);
       let r = await kc.getResource(krm);
@@ -330,7 +332,7 @@ describe('kubeClass', function () {
         kind: 'Deployment',
         'verbs': ['watch']
       });
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get(krm.uri())
         .replyWithError('bad things happened man');
       try {
@@ -347,7 +349,7 @@ describe('kubeClass', function () {
     var kc;
 
     beforeEach(() => {
-      kc = new KubeClass({ baseUrl: 'http://localhost' });
+      kc = new KubeClass();
     });
 
     afterEach(() => {
@@ -370,7 +372,7 @@ describe('kubeClass', function () {
         'resource-metadata': krm,
         object: exampleResource
       }];
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get(krm.uri())
         .query((actualQueryObject) => {
           return deepEqual(actualQueryObject, queryObject);
@@ -386,7 +388,7 @@ describe('kubeClass', function () {
     var kc;
 
     beforeEach(() => {
-      kc = new KubeClass({ baseUrl: 'http://localhost' });
+      kc = new KubeClass();
     });
 
     afterEach(() => {
@@ -410,7 +412,7 @@ describe('kubeClass', function () {
         'resource-metadata': krm,
         object: exampleResource
       }];
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get(krm.uri())
         .query((actualQueryObject) => {
           return deepEqual(actualQueryObject, queryObject);
@@ -442,7 +444,7 @@ describe('kubeClass', function () {
         'resource-metadata': krm,
         object: exampleResource
       }];
-      nock('http://localhost/')
+      nock('http://localhost:8001')
         .get(krm.uri())
         .query((actualQueryObject) => {
           return deepEqual(actualQueryObject, queryObject);
