@@ -192,7 +192,7 @@ describe('kubeClass', function () {
       nock.cleanAll();
     });
 
-    it.only('#success', async () => {
+    it('#success', async () => {
       nock('http://localhost:8001')
         .get('/api/v1')
         .replyWithFile(200, __dirname + '/replies/coreApis.json', { 'Content-Type': 'application/json' })
@@ -212,7 +212,6 @@ describe('kubeClass', function () {
         .replyWithFile(200, __dirname + '/replies/batch-v2alpha1.json', { 'Content-Type': 'application/json' });
 
       let mr = await kc.getKubeResourcesMeta('watch');
-      console.log(mr);
       assert.equal(mr.length, 8, 'Should get 8 MetaResources that support watch');
     });
 
