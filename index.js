@@ -24,10 +24,13 @@ const Watchman = require('./lib/Watchman');
 
 const EventHandler = require('./lib/EventHandler');
 
+const WatchManager = require('./lib/WatchManager');
+
 module.exports = {
   KubeClass,
   KubeApiConfig,
   KubeResourceMeta,
   Watchman,
-  EventHandler
+  EventHandler,
+  WatchManager
 };
