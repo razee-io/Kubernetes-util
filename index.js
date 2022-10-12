@@ -1,5 +1,5 @@
 /**
-* Copyright 2019 IBM Corp. All Rights Reserved.
+* Copyright 2019, 2022 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -24,10 +24,13 @@ const Watchman = require('./lib/Watchman');
 
 const EventHandler = require('./lib/EventHandler');
 
+const WatchManager = require('./lib/WatchManager');
+
 module.exports = {
   KubeClass,
   KubeApiConfig,
   KubeResourceMeta,
   Watchman,
-  EventHandler
+  EventHandler,
+  WatchManager
 };
