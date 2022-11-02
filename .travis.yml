@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - "lts/*"
+  - "lts/gallium"
 
 before_install:
   - echo "$DOCKERHUB_TOKEN" | docker login -u "icdevops" --password-stdin
