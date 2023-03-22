@@ -52,7 +52,7 @@ describe('kubeClass', function () {
         await kc.getCoreApis();
         assert.fail('#error test should have thrown an error');
       } catch (e) {
-        assert.strictEqual(e.name, 'RequestError', 'Request exception should be a \'RequestError\'');
+        assert.strictEqual(e.message, 'bad things happened man', 'Exception should be the bad response'); // request: RequestError, axios: AxiosError
       }
     });
 
@@ -174,7 +174,7 @@ describe('kubeClass', function () {
         await kc.getApis();
         assert.fail('#error test should have thrown an error');
       } catch (e) {
-        assert.strictEqual(e.name, 'RequestError', 'Request exception should be a \'RequestError\'');
+        assert.strictEqual(e.message, 'bad things happened man', 'Exception should be the bad response'); // request: RequestError, axios: AxiosError
       }
     });
 
@@ -250,7 +250,7 @@ describe('kubeClass', function () {
         await kc.getKubeResourcesMeta();
         assert.fail('#error test should have thrown an error');
       } catch (e) {
-        assert.strictEqual(e.name, 'RequestError', 'Request exception should be a \'RequestError\'');
+        assert.strictEqual(e.message, 'bad things happened man', 'Exception should be the bad response'); // request: RequestError, axios: AxiosError
       }
     });
 
@@ -331,6 +331,7 @@ describe('kubeClass', function () {
         kind: 'Deployment',
         'verbs': ['watch']
       });
+      console.log( krm.uri() );
       nock('http://localhost:8001')
         .get(krm.uri())
         .replyWithError('bad things happened man');
@@ -338,7 +339,7 @@ describe('kubeClass', function () {
         await kc.getKubeResourcesMeta();
         assert.fail('#error test should have thrown an error');
       } catch (e) {
-        assert.strictEqual(e.name, 'RequestError', 'Request exception should be a \'RequestError\'');
+        assert.include(e.message, 'No match for request', 'Exception should be the nock 404 error'); // request: RequestError, axios: AxiosError
       }
     });
   });
