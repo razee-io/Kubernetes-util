@@ -7,7 +7,7 @@ before_install:
   - echo "$DOCKERHUB_TOKEN" | docker login -u "icdevops" --password-stdin
 
 script:
-  - if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then npm audit; else npm audit || true; fi
+  - if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then npx audit-ci --config audit-ci.json; else npx audit-ci --config audit-ci.json || true; fi
   - npm run lint
   - npm test
   - if [[ "${TRAVIS_TAG}" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$ ]]; then npm version --no-git-tag-version "${TRAVIS_TAG}"; fi

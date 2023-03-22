@@ -1,0 +1,12 @@
+{
+    "low": true,
+    "_allowlistInfo": "none",
+    "allowlist": [
+      // GHSA-p8p7-x288-28g6:
+      // The Request package through 2.88.2 for Node.js allows a bypass of SSRF mitigations via an attacker-controller server that does a cross-protocol redirect (HTTP to HTTPS, or HTTPS to HTTP)
+      // Application unaffected as it only talks to kubernetes, which can be asserted as not an attacker-controllerd server.
+      "GHSA-p8p7-x288-28g6"
+    ],
+    "skip-dev": true
+  }
+  
