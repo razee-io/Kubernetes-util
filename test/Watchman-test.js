@@ -260,7 +260,7 @@ describe('watchman', () => {
       let eventCount = 0;
       const mockEventStream = new Stream.Readable({
         objectMode: true,
-        read: function (size) {
+        read: function() {
           if (++eventCount <= 5) {
             console.log( `stream returning data (event ${eventCount})` );
             return this.push(JSON.stringify({message: `event${eventCount}`}));
