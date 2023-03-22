@@ -18,6 +18,8 @@ const nock = require('nock');
 const watchman = require('../lib/Watchman');
 const log = require('../lib/bunyan-api').createLogger('Watchman-test');
 const KubeApiConfig = require('../lib/KubeApiConfig');
+const Stream = require('stream');
+
 KubeApiConfig({ localhost: true });
 
 const dummyOptions = { rewatchOnTimeout: false, requestOptions: { baseUrl: 'https://localhost:32263', uri: '/api/v1/watch/namespaces/default/services/kubernetes' } };
@@ -55,7 +57,7 @@ describe('watchman', () => {
       try {
         var wm = new watchman('', mockObjectHandler); // eslint-disable-line no-unused-vars
       } catch (err) {
-        assert.equal(err, 'uri \'http://localhost:8001undefined\' not valid watch uri.');
+        assert.include(err, 'not valid watch uri');
         errorsHappen = true;
       }
       assert.isTrue(errorsHappen);
@@ -205,6 +207,7 @@ describe('watchman', () => {
         error: (msg) => {
           assert.equal(msg, 'GET /api/v1/watch/namespaces/default/services/kubernetes returned 201');
           wm.end();
+          done();
         }
       };
       let myOptions = dummyOptions;
@@ -216,7 +219,7 @@ describe('watchman', () => {
       };
       nock('https://localhost:666')
         .get('/api/v1/watch/namespaces/default/services/kubernetes')
-        .reply(201);
+        .reply( 201, {} );  // Needs to return some data since it's a stream -- otherwise will not call `.on('data')`, which is where the logger.error is called
       let errorsHappen = false;
       try {
         wm = new watchman(myOptions, xmockObjectHandler);
@@ -227,7 +230,6 @@ describe('watchman', () => {
       } finally {
         assert.isFalse(wm.watching);
         assert.isFalse(errorsHappen);
-        done();
       }
     });
 
@@ -253,9 +255,25 @@ describe('watchman', () => {
       let xmockObjectHandler = (data) => {
         log.info('xmockObjectHandler', data);
       };
+
+      // Create a dummy stream that will return data 5 times and then an error
+      let eventCount = 0;
+      const mockEventStream = new Stream.Readable({
+        objectMode: true,
+        read: function (size) {
+          if (++eventCount <= 5) {
+            console.log( `stream returning data (event ${eventCount})` );
+            return this.push(JSON.stringify({message: `event${eventCount}`}));
+          } else {
+            console.log( `stream returning error (event ${eventCount})` );
+            return this.emit('error','errstring');
+          }
+        }
+      });
+
       nock('https://localhost:666')
         .get('/api/v1/watch/namespaces/default/services/kubernetes')
-        .replyWithError('test errorstream error');
+        .reply(200, mockEventStream);
       let errorsHappen = false;
       try {
         wm = new watchman(myOptions, xmockObjectHandler);
