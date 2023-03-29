@@ -256,17 +256,18 @@ describe('watchman', () => {
         log.info('xmockObjectHandler', data);
       };
 
-      // Create a dummy stream that will return data 5 times and then an error
+      // Create a dummy stream that will return data 3 times and then an error
       let eventCount = 0;
       const mockEventStream = new Stream.Readable({
         objectMode: true,
         read: function() {
-          if (++eventCount <= 5) {
+          eventCount++;
+          if (eventCount <= 3) {
             console.log( `stream returning data (event ${eventCount})` );
             return this.push(JSON.stringify({message: `event${eventCount}`}));
-          } else {
-            console.log( `stream returning error (event ${eventCount})` );
-            return this.emit('error','errstring');
+          }
+          else {
+            return this.emit('error', new Error( 'errstring' ));
           }
         }
       });

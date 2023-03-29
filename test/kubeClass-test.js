@@ -52,7 +52,7 @@ describe('kubeClass', function () {
         await kc.getCoreApis();
         assert.fail('#error test should have thrown an error');
       } catch (e) {
-        assert.strictEqual(e.message, 'bad things happened man', 'Exception should be the bad response'); // request: RequestError, axios: AxiosError
+        assert.strictEqual(e.message, 'bad things happened man', 'Exception should be the bad response'); // check message rather than error type (which will vary depending on which request library is used)
       }
     });
 
@@ -174,7 +174,7 @@ describe('kubeClass', function () {
         await kc.getApis();
         assert.fail('#error test should have thrown an error');
       } catch (e) {
-        assert.strictEqual(e.message, 'bad things happened man', 'Exception should be the bad response'); // request: RequestError, axios: AxiosError
+        assert.strictEqual(e.message, 'bad things happened man', 'Exception should be the bad response'); // check message rather than error type (which will vary depending on which request library is used)
       }
     });
 
@@ -250,7 +250,7 @@ describe('kubeClass', function () {
         await kc.getKubeResourcesMeta();
         assert.fail('#error test should have thrown an error');
       } catch (e) {
-        assert.strictEqual(e.message, 'bad things happened man', 'Exception should be the bad response'); // request: RequestError, axios: AxiosError
+        assert.strictEqual(e.message, 'bad things happened man', 'Exception should be the bad response'); // check message rather than error type (which will vary depending on which request library is used)
       }
     });
 
@@ -339,7 +339,7 @@ describe('kubeClass', function () {
         await kc.getKubeResourcesMeta();
         assert.fail('#error test should have thrown an error');
       } catch (e) {
-        assert.include(e.message, 'No match for request', 'Exception should be the nock 404 error'); // request: RequestError, axios: AxiosError
+        assert.include(e.message, 'No match for request', 'Exception should be the nock 404 error'); // check message rather than error type (which will vary depending on which request library is used)
       }
     });
   });
