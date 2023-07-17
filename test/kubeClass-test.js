@@ -83,8 +83,6 @@ describe('kubeClass', function () {
         .replyWithFile(200, __dirname + '/replies/apps-v1beta2.json', { 'Content-Type': 'application/json' })
         .get('/apis/batch/v1')
         .replyWithFile(200, __dirname + '/replies/batch-v1.json', { 'Content-Type': 'application/json' })
-        .get('/apis/batch/v1beta1')
-        .replyWithFile(200, __dirname + '/replies/batch-v1beta1.json', { 'Content-Type': 'application/json' })
         .get('/apis/batch/v2alpha1')
         .replyWithFile(200, __dirname + '/replies/batch-v2alpha1.json', { 'Content-Type': 'application/json' });
 
@@ -105,8 +103,6 @@ describe('kubeClass', function () {
         .replyWithFile(200, __dirname + '/replies/apps-v1beta2.json', { 'Content-Type': 'application/json' })
         .get('/apis/batch/v1')
         .replyWithFile(200, __dirname + '/replies/batch-v1.json', { 'Content-Type': 'application/json' })
-        .get('/apis/batch/v1beta1')
-        .replyWithFile(200, __dirname + '/replies/batch-v1beta1.json', { 'Content-Type': 'application/json' })
         .get('/apis/batch/v2alpha1')
         .replyWithFile(200, __dirname + '/replies/batch-v2alpha1.json', { 'Content-Type': 'application/json' });
 
@@ -151,8 +147,6 @@ describe('kubeClass', function () {
         .get('/apis/apps/v1beta2')
         .reply(404, { msg: 'not found' })
         .get('/apis/batch/v1')
-        .reply(404, { msg: 'not found' })
-        .get('/apis/batch/v1beta1')
         .reply(404, { msg: 'not found' })
         .get('/apis/batch/v2alpha1')
         .reply(404, { msg: 'not found' });
@@ -206,8 +200,6 @@ describe('kubeClass', function () {
         .replyWithFile(200, __dirname + '/replies/apps-v1beta2.json', { 'Content-Type': 'application/json' })
         .get('/apis/batch/v1')
         .replyWithFile(200, __dirname + '/replies/batch-v1.json', { 'Content-Type': 'application/json' })
-        .get('/apis/batch/v1beta1')
-        .replyWithFile(200, __dirname + '/replies/batch-v1beta1.json', { 'Content-Type': 'application/json' })
         .get('/apis/batch/v2alpha1')
         .replyWithFile(200, __dirname + '/replies/batch-v2alpha1.json', { 'Content-Type': 'application/json' });
 
@@ -229,8 +221,6 @@ describe('kubeClass', function () {
         .replyWithFile(200, __dirname + '/replies/apps-v1beta2.json', { 'Content-Type': 'application/json' })
         .get('/apis/batch/v1')
         .replyWithFile(200, __dirname + '/replies/batch-v1.json', { 'Content-Type': 'application/json' })
-        .get('/apis/batch/v1beta1')
-        .replyWithFile(200, __dirname + '/replies/batch-v1beta1.json', { 'Content-Type': 'application/json' })
         .get('/apis/batch/v2alpha1')
         .replyWithFile(200, __dirname + '/replies/batch-v2alpha1.json', { 'Content-Type': 'application/json' });
 
