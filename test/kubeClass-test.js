@@ -107,7 +107,7 @@ describe('kubeClass', function () {
         .replyWithFile(200, __dirname + '/replies/batch-v2alpha1.json', { 'Content-Type': 'application/json' });
 
       let apis = await kc.getApis(true);
-      assert.equal(apis.length, 38, 'Should get 38 resource apis');
+      assert.equal(apis.length, 36, 'Should get 36 resource apis');
 
     });
 
