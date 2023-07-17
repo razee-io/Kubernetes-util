@@ -6,7 +6,7 @@
         "details": "The Request package through 2.88.2 for Node.js allows a bypass of SSRF mitigations via an attacker-controller server that does a cross-protocol redirect (HTTP to HTTPS, or HTTPS to HTTP)",
         "justification1": "Request package is deprecated and unlikely to receive updates.",
         "justification2": "Application unaffected as it only talks to kubernetes, which can be asserted as not an attacker-controlled server.",
-        "expiry": "28 April 2023 00:00"
+        "expiry": "28 July 2023 00:00"
       }
     ],
     "allowlist": [
