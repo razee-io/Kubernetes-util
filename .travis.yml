@@ -22,8 +22,8 @@ script:
 deploy:
   # Publish npm package with tag "next" on release candidates
   - provider: npm
-    email: "${NPMJS_EMAIL}"
-    api_key: "${NPMJS_API_KEY}"
+    email: "${NPMJS_EMAIL_20231206}"
+    api_key: "${NPMJS_API_KEY_20231206}"
     tag: next
     skip_cleanup: true
     on:
@@ -31,8 +31,8 @@ deploy:
       condition: ${TRAVIS_TAG} =~ ^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)$
   # Publish npm package as "latest" on release
   - provider: npm
-    email: "${NPMJS_EMAIL}"
-    api_key: "${NPMJS_API_KEY}"
+    email: "${NPMJS_EMAIL_20231206}"
+    api_key: "${NPMJS_API_KEY_20231206}"
     skip_cleanup: true
     on:
       tags: true
