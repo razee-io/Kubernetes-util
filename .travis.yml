@@ -18,7 +18,7 @@ script:
   # Perform UA scan on non-PR builds
   - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then curl -LJO https://unified-agent.s3.amazonaws.com/wss-unified-agent.jar; java -jar wss-unified-agent.jar -d . || echo "UA Scan Error occurred"; fi
 before_deploy:
-  - npm install npm@9
+  - npm install -g npm@9
 deploy:
   # Publish npm package with tag "next" on release candidates
   - provider: npm
