@@ -35,11 +35,11 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@kubernetes/client-node": "^0.16.3",
-    "@razee/request-util": "^1.0.2",
+    "@kubernetes/client-node": "^0.20.0",
+    "@razee/request-util": "^1.0.3",
     "bunyan": "^1.8.15",
     "clone": "^2.1.2",
-    "deepmerge": "^4.2.2",
+    "deepmerge": "^4.3.1",
     "delay": "^5.0.0",
     "fs-extra": "^10.1.0",
     "JSONStream": "^1.3.5",
@@ -49,15 +49,15 @@
   },
   "devDependencies": {
     "chai": "^4.3.6",
-    "deep-equal": "^2.0.5",
-    "eslint": "^8.14.0",
-    "markdownlint-cli": "^0.33.0",
-    "mocha": "^10.0.0",
-    "nock": "^13.2.4",
+    "deep-equal": "^2.2.3",
+    "eslint": "^8.57.0",
+    "markdownlint-cli": "^0.39.0",
+    "mocha": "^10.4.0",
+    "nock": "^13.5.4",
     "npm-run-all": "^4.1.5",
     "nyc": "^15.1.0",
     "sinon": "^13.0.2",
     "validate-commit-msg": "^1.1.3",
-    "yaml-lint": "^1.6.0"
+    "yaml-lint": "^1.7.0"
   }
 }
